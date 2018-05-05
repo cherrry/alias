@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <title>URL Alias</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/semantic-ui/2.3.1/semantic.min.css">
+    <link rel="stylesheet" href="options.css">
+  </head>
+  <body>
+    <div id="app" class="main ui container">
+      <h1 class="ui header">
+        URL Alias
+        <span class="sub header">
+          Manage your URL aliases.
+        </span>
+      </h1>
+      <form class="ui form" action>
+        <div v-for="a in aliases">
+          <div class="two fields">
+            <div class="four wide field">
+              <input v-model:alias="a.alias" type="text" name="alias" placeholder="alias/">
+            </div>
+            <div class="twelve wide field">
+              <input v-model:dest="a.dest" type="text" name="dest" placeholder="www.destination.com">
+            </div>
+          </div>
+        </div>
+        <div class="two fields">
+          <div class="four wide field">
+            <input v-model:alias="newAlias.alias" type="text" name="alias" placeholder="alias/">
+          </div>
+          <div class="twelve wide field">
+            <input v-model:dest="newAlias.dest" type="text" name="dest" placeholder="www.destination.com">
+          </div>
+        </div>
+        <button v-on:click="save" type="button" class="ui button">Save</button>
+      </form>
+    </div>
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/vue/2.5.16/vue.min.js"></script>
+    <script type="text/javascript" src="options.js"></script>
+  </body>
+</html>

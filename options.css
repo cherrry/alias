@@ -1,0 +1,9 @@
+body {
+  background-color: #fcfcfc;
+}
+
+.main {
+  background-color: white;
+  min-height: 100%;
+  padding: 32px 20px;
+}
