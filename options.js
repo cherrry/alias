@@ -12,11 +12,19 @@ new Vue({
   },
   methods: {
     save: function() {
-      const newAlias = this.newAlias;
+      let {aliases, newAlias} = this;
       if (newAlias.alias !== '' && newAlias.dest !== '') {
-        this.aliases = this.aliases.concat([newAlias]);
-        this.newAlias = {alias: '', dest: ''};
+        aliases = aliases.concat([newAlias]);
+        newAlias = {alias: '', dest: ''};
       }
+      this.aliases = aliases.filter(({alias, dest}) => {
+        return alias !== '' && dest !== '';
+      }).sort((a1, a2) => {
+        const al1 = a1.alias;
+        const al2 = a2.alias;
+        return al1 < al2 ? -1 : (al1 > al2 ? 1 : 0);
+      });
+      this.newAlias = newAlias;
     },
   },
 });
