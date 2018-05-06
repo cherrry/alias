@@ -1,18 +1,15 @@
 /* eslint-env browser */
-/* global Vue */
+/* global chrome, Vue */
 
 Vue.component('alias-input', {
   props: ['alias', 'dest'],
   template: '#alias-input-tmpl',
 });
 
-new Vue({
+const app = new Vue({
   el: '#app',
   data: {
-    aliases: [
-      {alias: 'c/', dest: 'calendar.google.com'},
-      {alias: 'm/', dest: 'mail.google.com'},
-    ],
+    aliases: [],
     newAlias: {alias: '', dest: ''},
   },
   methods: {
@@ -30,6 +27,11 @@ new Vue({
         return al1 < al2 ? -1 : (al1 > al2 ? 1 : 0);
       });
       this.newAlias = newAlias;
+      chrome.storage.sync.set({aliases: this.aliases});
     },
   },
+});
+
+chrome.storage.sync.get(['aliases'], function({aliases}) {
+  app.aliases = aliases || [];
 });
