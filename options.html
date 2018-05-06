@@ -22,19 +22,25 @@
     </div>
     <script type="text/x-template" id="alias-input-tmpl">
       <div class="two fields">
-        <div class="four wide field">
+        <div v-bind:class="{error: aliasError}" class="four wide field">
           <input
             v-bind:value="alias"
             v-on:input="$emit('update:alias', $event.target.value)"
-            type="text" name="alias" placeholder="alias/"
+            type="text" name="alias" placeholder="e/"
           >
+          <div v-if="aliasError" class="ui pointing label">
+            Please use lower case alphabet only.
+          </div>
         </div>
-        <div class="twelve wide field">
+        <div v-bind:class="{error: destError}" class="twelve wide field">
           <input
             v-bind:value="dest"
             v-on:input="$emit('update:dest', $event.target.value)"
-            type="text" name="dest" placeholder="www.destination.com"
+            type="text" name="dest" placeholder="https://www.example.com/"
           >
+          <div v-if="destError" class="ui pointing label">
+            Please input a valid URL.
+          </div>
         </div>
       </div>
     </script>

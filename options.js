@@ -1,8 +1,40 @@
 /* eslint-env browser */
 /* global chrome, Vue */
 
+const normalizeAlias = function(alias) {
+  return alias.trim().replace(/([a-z]+)\/?/, '$1/');
+};
+
+const normalizeDest = function(dest) {
+  if (!dest.endsWith('/')) {
+    dest = dest + '/';
+  }
+  if (dest.indexOf('://') === -1) {
+    dest = 'https://' + dest;
+  }
+  return dest;
+};
+
 Vue.component('alias-input', {
   props: ['alias', 'dest'],
+  computed: {
+    aliasError: function() {
+      const alias = normalizeAlias(this.alias);
+      return alias !== '' && !/^[a-z]+\/?$/.test(alias);
+    },
+    destError: function() {
+      if (this.dest === '') {
+        return false;
+      }
+      const dest = normalizeDest(this.dest);
+      try {
+        new URL(dest);
+      } catch (err) {
+        return true;
+      }
+      return false;
+    },
+  },
   template: '#alias-input-tmpl',
 });
 
@@ -19,7 +51,9 @@ const app = new Vue({
         aliases = aliases.concat([newAlias]);
         newAlias = {alias: '', dest: ''};
       }
-      this.aliases = aliases.filter(({alias, dest}) => {
+      this.aliases = aliases.map(({alias, dest}) => {
+        return {alias: normalizeAlias(alias), dest: normalizeDest(dest)};
+      }).filter(({alias, dest}) => {
         return alias !== '' && dest !== '';
       }).sort((a1, a2) => {
         const al1 = a1.alias;
