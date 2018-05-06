@@ -1,6 +1,11 @@
 /* eslint-env browser */
 /* global Vue */
 
+Vue.component('alias-input', {
+  props: ['alias', 'dest'],
+  template: '#alias-input-tmpl',
+});
+
 new Vue({
   el: '#app',
   data: {

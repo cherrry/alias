@@ -15,27 +15,29 @@
         </span>
       </h1>
       <form class="ui form" action>
-        <div v-for="a in aliases">
-          <div class="two fields">
-            <div class="four wide field">
-              <input v-model:alias="a.alias" type="text" name="alias" placeholder="alias/">
-            </div>
-            <div class="twelve wide field">
-              <input v-model:dest="a.dest" type="text" name="dest" placeholder="www.destination.com">
-            </div>
-          </div>
-        </div>
-        <div class="two fields">
-          <div class="four wide field">
-            <input v-model:alias="newAlias.alias" type="text" name="alias" placeholder="alias/">
-          </div>
-          <div class="twelve wide field">
-            <input v-model:dest="newAlias.dest" type="text" name="dest" placeholder="www.destination.com">
-          </div>
-        </div>
+        <alias-input v-for="a in aliases" v-bind.sync="a"></alias-input>
+        <alias-input v-bind.sync="newAlias"></alias-input>
         <button v-on:click="save" type="button" class="ui button">Save</button>
       </form>
     </div>
+    <script type="text/x-template" id="alias-input-tmpl">
+      <div class="two fields">
+        <div class="four wide field">
+          <input
+            v-bind:value="alias"
+            v-on:input="$emit('update:alias', $event.target.value)"
+            type="text" name="alias" placeholder="alias/"
+          >
+        </div>
+        <div class="twelve wide field">
+          <input
+            v-bind:value="dest"
+            v-on:input="$emit('update:dest', $event.target.value)"
+            type="text" name="dest" placeholder="www.destination.com"
+          >
+        </div>
+      </div>
+    </script>
     <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/vue/2.5.16/vue.min.js"></script>
     <script type="text/javascript" src="options.js"></script>
   </body>
