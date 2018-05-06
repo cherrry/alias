@@ -3,7 +3,12 @@
   "name": "URL Alias",
   "description": "Replace URLs with short alias.",
   "version": "0.0.0",
-  "permissions": ["storage", "tabs"],
+  "permissions": [
+    "storage",
+    "webRequest",
+    "webRequestBlocking",
+    "<all_urls>"
+  ],
   "content_security_policy": "script-src 'self' 'unsafe-eval' https://cdnjs.cloudflare.com; object-src 'self'",
   "options_page": "options.html",
   "background": {
